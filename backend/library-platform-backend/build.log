@@ -1,0 +1,116 @@
+﻿
+> Task :compileJava
+./gradlew : C:\Users\
+User\Desktop\Mini_pro
+ject_4\library-platfo
+rm-backend\src\main\j
+ava\com\example\demo\
+controller\ImageContr
+oller.java:9: error: 
+cannot find symbol
+위치 줄:1 문자:1
++ ./gradlew compileJa
+va --console=plain 2>
+&1 | Out-File -Encodi
+ng UTF8  ...
++ ~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~
+~~
+    + CategoryInfo   
+           : NotSpe  
+  cified: (C:\User   
+ s\User\D...not f    
+ind symbol:Strin    g
+) [], RemoteExc    ep
+tion
+    + FullyQualified 
+   ErrorId : Native  
+  CommandError
+ 
+    private final Ope
+nAiService openAiServ
+ice;
+                  ^
+  symbol:   class Ope
+nAiService
+  location: class Ima
+geController
+C:\Users\User\Desktop
+\Mini_project_4\libra
+ry-platform-backend\s
+rc\main\java\com\exam
+ple\demo\controller\I
+mageController.java:1
+1: error: cannot find
+ symbol
+    public ImageContr
+oller(OpenAiService o
+penAiService) {
+                     
+      ^
+  symbol:   class Ope
+nAiService
+  location: class Ima
+geController
+2 errors
+
+> Task :compileJava FAILED
+
+[Incubating] Problems report is available at: file:///C:/Users/User/Desktop/Mini_project_4/library-platform-backend/build/reports/problems/problems-report.html
+
+FAILURE: Build failed
+ with an exception.
+
+* What went wrong:
+Execution failed for 
+task ':compileJava'.
+> Compilation failed;
+ see the compiler out
+put below.
+  C:\Users\User\Deskt
+op\Mini_project_4\lib
+rary-platform-backend
+\src\main\java\com\ex
+ample\demo\controller
+\ImageController.java
+:9: error: cannot fin
+d symbol
+      private final O
+penAiService openAiSe
+rvice;
+                    ^
+    symbol:   class O
+penAiService
+    location: class I
+mageController
+  C:\Users\User\Deskt
+op\Mini_project_4\lib
+rary-platform-backend
+\src\main\java\com\ex
+ample\demo\controller
+\ImageController.java
+:11: error: cannot fi
+nd symbol
+      public ImageCon
+troller(OpenAiService
+ openAiService) {
+                     
+        ^
+    symbol:   class O
+penAiService
+    location: class I
+mageController
+  2 errors
+
+* Try:
+> Check your code and
+ dependencies to fix 
+the compilation error
+(s)
+> Run with --scan to 
+generate a Build Scan
+ (powered by Develoci
+ty).
+
+BUILD FAILED in 19s
+1 actionable task: 1 executed

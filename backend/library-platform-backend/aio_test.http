@@ -1,0 +1,40 @@
+### 1. 회원가입 테스트
+POST http://localhost:8080/auth/signup
+Content-Type: application/json
+
+{
+  "memberId": "user123",
+  "password": "mypassword",
+  "name": "테스트유저",
+  "phone": "010-1111-2222",
+  "address": "서울시 강남구"
+}
+
+### 2. 로그인 테스트 (회원가입한 아이디로)
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+  "memberId": "user123",
+  "password": "mypassword"
+}
+
+### 3. 관리자 로그인 테스트
+POST http://localhost:8080/admin/login
+Content-Type: application/json
+
+{
+  "employeeId": 1,
+  "password": "admin1234"
+}
+
+### 4. 관리자(직원) 추가 테스트
+POST http://localhost:8080/admin/signup
+Content-Type: application/json
+
+{
+  "password": "newadmin123",
+  "name": "신입사원",
+  "phone": "010-9999-8888",
+  "address": "판교 테크노밸리"
+}
