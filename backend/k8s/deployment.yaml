@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-web-app  # 배포할 앱 이름
+spec:
+  replicas: 3       # 파드(서버) 개수 (롤링 배포 효과를 보려면 2개 이상 추천)
+  selector:
+    matchLabels:
+      app: my-web-app
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1        # 배포 중 최대로 생성될 수 있는 추가 파드 수
+      maxUnavailable: 0  # 배포 중 동시에 죽어있어도 되는 파드 수 (0이면 무중단)
+  template:
+    metadata:
+      labels:
+        app: my-web-app
+    spec:
+      containers:
+        - name: my-web-container
+          image: 416225317325.dkr.ecr.us-east-2.amazonaws.com/aivle-bookservice-team5-backend:latest
+          ports:
+            - containerPort: 8080      # 앱이 사용하는 포트 (예: 80, 8080)
