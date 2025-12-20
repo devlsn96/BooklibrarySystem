@@ -1,8 +1,8 @@
-package com.example.demo.book.entity;
+package com.example.demo.user.entity;
 
-import com.example.demo.user.entity.Employee;
 import jakarta.persistence.*;
 import lombok.*;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -10,18 +10,18 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class BookManagement {
+public class MemberManagement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; // 도서관리번호
+    private Long id; // 등록번호
 
     @ManyToOne
-    @JoinColumn(name = "book_id")
-    private Book book;
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     @ManyToOne
     @JoinColumn(name = "employee_id")
     private Employee employee;
 
-    private Boolean isLoaned; // 대여유무
+    private LocalDate registrationDate; // 등록일
 }

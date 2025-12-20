@@ -50,14 +50,14 @@ public class SecurityConfig {
 
                         // 명세서: 도서 등록, 대여 가능 여부 확인 (/admin/books/...)
                         // 팁: /admin/** 로 시작하는 주소는 한방에 관리자 전용으로 묶음
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/api/books/admin/**").hasRole("ADMIN")
 
                         // 명세서: 도서 삭제 (DELETE /api/books/delete/{bookId})
-                        .requestMatchers(HttpMethod.DELETE, "/api/books/delete/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/books/admin/delete/**").hasRole("ADMIN")
 
                         // 명세서: 도서 수정 (UPDATE는 HTTP 메서드가 아님 -> PUT/PATCH로 매핑)
-                        .requestMatchers(HttpMethod.PUT, "/api/books/update/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PATCH, "/api/books/update/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/books/admin/update/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PATCH, "/api/books/admin/update/**").hasRole("ADMIN")
 
 
                         // ====================================================
@@ -67,10 +67,10 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/loans").hasRole("USER")
 
                         // 명세서: 내 대여 목록 (GET /loans/my)
-                        .requestMatchers(HttpMethod.GET, "/loans/my").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/api/loans/my").hasRole("USER")
 
                         // 명세서: 반납 하기 (PATCH /loans/{loanId}/return)
-                        .requestMatchers(HttpMethod.PATCH, "/loans/**/return").hasRole("USER")
+                        .requestMatchers(HttpMethod.PATCH, "/api/loans/**/return").hasRole("USER")
 
 
                         // ====================================================

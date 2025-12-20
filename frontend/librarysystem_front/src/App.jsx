@@ -6,7 +6,7 @@ import NewBookPage from "./pages/NewBookPage";
 import DetailBookPage from "./pages/DetailBookPage";
 import EditBookPage from "./pages/EditBookPage";
 import LoginPage from "./pages/LoginPage";
-import SignupPage from "./pages/SignupPage";
+import SignupPage from "./pages/SignUpPage";
 import AdminLoginPage from "./pages/AdminLoginPage";
 import { SearchProvider } from "./context/SearchContext";
 import { AuthProvider } from "./context/AuthContext";

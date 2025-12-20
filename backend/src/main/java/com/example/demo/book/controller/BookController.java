@@ -1,22 +1,24 @@
 package com.example.demo.book.controller;
 
-import com.example.demo.book.dto.BookListResponse;
-import com.example.demo.book.dto.BookRequest;
-import com.example.demo.book.dto.BookResponse;
-import com.example.demo.book.service.BookService;
+import com.example.demo.book.dto.*;
+import com.example.demo.book.entity.Book;
+import com.example.demo.book.service.BookAdminServiceImpl;
+import com.example.demo.book.service.BookInventoryService;
+import com.example.demo.book.service.BookServiceImpliments;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/api/books")
 @RequiredArgsConstructor
 public class BookController {
 
-    private final BookService bookService; // Service (팀원과의 계약) 주입
+    private final BookServiceImpliments bookService; // Service (팀원과의 계약) 주입
+    private final BookInventoryService inventoryService;
+    private final BookAdminServiceImpl bookAdminService;
 
     // ==========================================
     // 1. 도서 목록 조회 (담당 영역: GET /api/books)
@@ -53,6 +55,66 @@ public class BookController {
         // ★ [상세 조회 로직] Service에 위임하여 상세 정보 및 재고 계산 요청
         BookResponse book = bookService.getBookById(bookId);
         return ResponseEntity.ok(book);
+    }
+    /**
+     * 관리자 대여가능여부 확인 및 증감
+     * POST /admin/books/{bookId}/stock
+     * 요청 바디: { "count": <증감 수량, 기본 1 / 0이면 대여 불가로 처리> }
+     * 응답: { "stockcount": <대출 가능 재고 수량> }
+     */
+    @PostMapping("/admin/{bookId}/stock")
+    public StockResponse checkAvailability(@PathVariable("bookId") Long bookId,
+                                           @RequestBody StockRequest request) {
+        int count = request.getStockcount(); // 기본 1
+        int current = inventoryService.restock(bookId, count);
+        return new StockResponse(current);
+    }
+
+    // 관리자 도서 등록: POST /admin/books
+    @PostMapping("/admin")
+    public AdminBookResponse createBook(@RequestBody AdminBookRequest req) {
+        Book book = buildBookFromRequest(req, true);
+        Book saved = bookAdminService.createBook(book, req.getDescription());
+        return new AdminBookResponse(saved.getId(), "등록완료");
+    }
+
+    // 관리자 도서 수정: PATCH /admin/books/{bookId}
+    @PatchMapping("/admin/{bookId}")
+    public AdminBookResponse updateBook(@PathVariable("bookId") Long bookId,
+                                        @RequestBody AdminBookRequest req) {
+        Book book = buildBookFromRequest(req, false);
+        Book updated = bookAdminService.updateBook(bookId, book, req.getDescription());
+        return new AdminBookResponse(updated.getId(), "수정완료");
+    }
+
+    /**
+     * 관리자 도서 삭제
+     * DELETE /admin/books/{bookId}
+     */
+    @DeleteMapping("/admin/{bookId}")
+    public AdminBookResponse deleteBook(@PathVariable("bookId") Long bookId) {
+        bookAdminService.deleteBook(bookId);
+        return new AdminBookResponse(bookId, "삭제완료");
+    }
+
+    /**
+     * AdminBookRequest를 Book 엔티티로 변환
+     * @param req 요청 DTO
+     * @param useDefaultRegistrationDate true면 등록일 미지정 시 오늘 날짜로 설정
+     */
+    private Book buildBookFromRequest(AdminBookRequest req, boolean useDefaultRegistrationDate) {
+        return Book.builder()
+                .title(req.getTitle())
+                .author(req.getAuthor())
+                .publisher(req.getPublisher())
+                .genre(req.getGenre())
+                .tag(req.getTag())
+                .coverImage(req.getCoverImageUrl())
+                .price(req.getPrice())
+                .registrationDate(useDefaultRegistrationDate && req.getRegistrationDate() == null
+                        ? LocalDate.now()
+                        : req.getRegistrationDate())
+                .build();
     }
 
 }

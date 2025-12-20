@@ -1,6 +1,6 @@
 package com.example.demo.loan.entity;
 
-import com.example.demo.member.entity.Member;
+import com.example.demo.user.entity.Member;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDate;

@@ -1,7 +1,7 @@
 package com.example.demo.config;
 
-import com.example.demo.employee.entity.Employee;
-import com.example.demo.employee.repository.EmployeeRepository;
+import com.example.demo.user.entity.Employee;
+import com.example.demo.user.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
