@@ -6,17 +6,25 @@ import { signup } from "../services/bookService";
 export default function SignupPage() {
   const navigate = useNavigate();
 
-  const [name, setName] = useState("");
-  const [memberId, setMemberId] = useState("");
-  const [password, setPassword] = useState("");
-  const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
+  const [form, setForm] = useState({
+    name: "",
+    memberId: "",
+    password: "",
+    phone: "",
+    address: "",
+  });
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!name || !memberId || !password || !phone || !address) {
+    if (
+      !form.name ||
+      !form.memberId ||
+      !form.password ||
+      !form.phone ||
+      !form.address
+    ) {
       alert("모든 항목을 입력해 주세요.");
       return;
     }
@@ -25,13 +33,13 @@ export default function SignupPage() {
       setLoading(true);
 
       // signup은 res.data를 그대로 리턴한다고 가정
-      const res = await signup({
-        memberId,
-        password,
-        name,
-        phone,
-        address,
-      });
+      const res = await signup(
+        form.memberId,
+        form.password,
+        form.name,
+        form.phone,
+        form.address
+      );
 
       // 메시지 띄우고 → 바로 로그인 페이지로 이동
       alert(res?.msg || "회원가입이 완료되었습니다.");
@@ -81,8 +89,8 @@ export default function SignupPage() {
             variant="outlined"
             size="small"
             fullWidth
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={form.name}
+            onChange={(e) => setForm(e.target.value)}
           />
 
           <TextField
@@ -91,8 +99,8 @@ export default function SignupPage() {
             variant="outlined"
             size="small"
             fullWidth
-            value={memberId}
-            onChange={(e) => setMemberId(e.target.value)}
+            value={form.memberId}
+            onChange={(e) => setForm(e.target.value)}
           />
 
           <TextField
@@ -101,8 +109,8 @@ export default function SignupPage() {
             variant="outlined"
             size="small"
             fullWidth
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={form.password}
+            onChange={(e) => setForm(e.target.value)}
           />
 
           <TextField
@@ -110,8 +118,8 @@ export default function SignupPage() {
             variant="outlined"
             size="small"
             fullWidth
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
+            value={form.phone}
+            onChange={(e) => setForm(e.target.value)}
           />
 
           <TextField
@@ -119,8 +127,8 @@ export default function SignupPage() {
             variant="outlined"
             size="small"
             fullWidth
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
+            value={form.address}
+            onChange={(e) => setForm(e.target.value)}
           />
 
           <Button

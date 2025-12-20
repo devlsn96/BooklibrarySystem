@@ -78,32 +78,23 @@ export async function fetchBookById(bookId) {
 // 도서 등록 (관리자) POST /admin/books
 // Body: { title, author, publisher, genre, tag, coverImageUrl, price, description }
 export async function createBook(bookData) {
-  const res = await api.post("/admin/books", bookData);
+  const res = await api.post("/api/books/admin", bookData);
   return res.data; // { id: 생성된ID, msg: "등록완료" }
 }
 
 // 도서 수정 (관리자) PATCH /admin/books/{bookId}
 // Body: 도서 수정 전체 필드 patch로 수정
 export async function updateBook(bookId, updateData) {
-  const res = await api.patch(`/admin/books/${bookId}`, updateData);
+  const res = await api.patch(`/api/books/admin/${bookId}`, updateData);
   return res.data; // { id: bookId, msg: "수정완료" }
 }
 
 // 도서 삭제 (관리자) DELETE /admin/books/{bookId}
 export async function deleteBook(bookId) {
-  const res = await api.delete(`/admin/books/${bookId}`);
+  const res = await api.delete(`/api/books/admin/${bookId}`);
   return res.data; // { id: bookId, msg: "삭제완료" }
 }
-// ======================= AI 이미지 생성 =======================
-// Body: { title, prompt }
-// Res: { imageUrl: "..." }
-export async function generateBookImage({ title, prompt }) {
-  const res = await api.post("/api/images/generate", {
-    title,
-    prompt
-  });
-  return res.data; // { imageUrl }
-}
+
 // ======================= 대여/반납 Loans =======================
 // 도서 대여 POST /api/loans
 // Header: Token

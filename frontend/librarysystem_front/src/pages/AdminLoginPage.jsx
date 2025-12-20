@@ -7,14 +7,16 @@ import { useAuth } from "../context/AuthContext";
 export default function AdminLoginPage() {
   const navigate = useNavigate();
   const { authLogin } = useAuth();
-  const [employeeId, setEmployeeId] = useState("");
-  const [password, setPassword] = useState("");
+  const [form, setForm] = useState({
+    employeeId: "",
+    password: "",
+  });
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!employeeId || !password) {
+    if (!form.employeeId || !form.password) {
       alert("사원번호와 비밀번호를 모두 입력해 주세요.");
       return;
     }
@@ -23,9 +25,9 @@ export default function AdminLoginPage() {
       setLoading(true);
 
       // 관리자 로그인 API 호출 { accessToken, role } 형태를 반환한다고 가정
-      const res = await adminLogin(employeeId, password);
+      const data = await adminLogin({employeeId, password});
 
-      const { accessToken, role, loginId } = res;
+      const { accessToken, role, loginId } = data;
 
       if (!accessToken) {
         alert("로그인 응답에서 토큰을 받지 못했습니다.");
@@ -89,8 +91,8 @@ export default function AdminLoginPage() {
             size="small"
             fullWidth
             placeholder="사원번호를 입력하세요"
-            value={employeeId}
-            onChange={(e) => setEmployeeId(e.target.value)}
+            value={form.employeeId}
+            onChange={(e) => setForm(e.target.value)}
           />
 
           {/* 비밀번호 */}
@@ -100,8 +102,8 @@ export default function AdminLoginPage() {
             variant="outlined"
             size="small"
             fullWidth
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={form.password}
+            onChange={(e) => setForm(e.target.value)}
           />
 
           <Button

@@ -8,15 +8,17 @@ export default function LoginPage() {
   const navigate = useNavigate();
   const { authLogin } = useAuth();
 
-  const [memberId, setMemberId] = useState("");
-  const [password, setPassword] = useState("");
+  const [form, setForm] = useState({
+    memberId: "",
+    password: "",
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       // 로그인 API 호출
-      const res = await login(memberId, password);
+      const res = await login({memberId, password});
 
       const { accessToken, role, loginId } = res;
 
@@ -82,8 +84,8 @@ export default function LoginPage() {
             size="small"
             fullWidth
             placeholder="회원번호를 입력하세요"
-            value={memberId}
-            onChange={(e) => setMemberId(e.target.value)}
+            value={form.memberId}
+            onChange={(e) => setForm(e.target.value)}
           />
 
           {/* 비밀번호 */}
@@ -93,8 +95,8 @@ export default function LoginPage() {
             variant="outlined"
             size="small"
             fullWidth
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={form.password}
+            onChange={(e) => setForm(e.target.value)}
           />
 
           <Button
