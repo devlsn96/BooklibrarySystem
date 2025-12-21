@@ -6,13 +6,11 @@ import { signup } from "../services/bookService";
 export default function SignupPage() {
   const navigate = useNavigate();
 
-  const [form, setForm] = useState({
-    name: "",
-    memberId: "",
-    password: "",
-    phone: "",
-    address: "",
-  });
+  const [name, setName] = useState("");
+  const [memberId, setMemberId] = useState("");
+  const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -33,13 +31,7 @@ export default function SignupPage() {
       setLoading(true);
 
       // signup은 res.data를 그대로 리턴한다고 가정
-      const res = await signup(
-        form.memberId,
-        form.password,
-        form.name,
-        form.phone,
-        form.address
-      );
+      const res = await signup({ memberId, password, name, phone, address });
 
       // 메시지 띄우고 → 바로 로그인 페이지로 이동
       alert(res?.msg || "회원가입이 완료되었습니다.");
@@ -89,8 +81,8 @@ export default function SignupPage() {
             variant="outlined"
             size="small"
             fullWidth
-            value={form.name}
-            onChange={(e) => setForm(e.target.value)}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
 
           <TextField
@@ -99,8 +91,8 @@ export default function SignupPage() {
             variant="outlined"
             size="small"
             fullWidth
-            value={form.memberId}
-            onChange={(e) => setForm(e.target.value)}
+            value={memberId}
+            onChange={(e) => setMemberId(e.target.value)}
           />
 
           <TextField
@@ -109,8 +101,8 @@ export default function SignupPage() {
             variant="outlined"
             size="small"
             fullWidth
-            value={form.password}
-            onChange={(e) => setForm(e.target.value)}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
 
           <TextField
@@ -118,8 +110,8 @@ export default function SignupPage() {
             variant="outlined"
             size="small"
             fullWidth
-            value={form.phone}
-            onChange={(e) => setForm(e.target.value)}
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
           />
 
           <TextField
@@ -127,8 +119,8 @@ export default function SignupPage() {
             variant="outlined"
             size="small"
             fullWidth
-            value={form.address}
-            onChange={(e) => setForm(e.target.value)}
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
           />
 
           <Button
