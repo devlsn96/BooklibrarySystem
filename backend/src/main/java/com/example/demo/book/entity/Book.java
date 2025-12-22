@@ -1,5 +1,6 @@
 package com.example.demo.book.entity;
 
+import jakarta.annotation.Generated;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDate;

@@ -50,7 +50,7 @@ public class AuthController {
     @PostMapping("/auth/login")
     public ResponseEntity<?> login(@RequestBody Map<String, String> body) {
         String token = authService.login(body.get("memberId"), body.get("password"));
-        return ResponseEntity.ok(Map.of("accessToken", token));
+        return ResponseEntity.ok(Map.of("accessToken", token, "role", "USER", "loginId", body.get("memberId")));
     }
 
     // 관리자 로그인
@@ -60,6 +60,6 @@ public class AuthController {
         String password = (String) body.get("password");
 
         String token = authService.adminLogin(employeeId, password);
-        return ResponseEntity.ok(Map.of("accessToken", token, "role", "ADMIN"));
+        return ResponseEntity.ok(Map.of("accessToken", token, "role", "ADMIN", "loginId", employeeId));
     }
 }

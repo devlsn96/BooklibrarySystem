@@ -2,9 +2,7 @@ package com.example.demo.book.controller;
 
 import com.example.demo.book.dto.*;
 import com.example.demo.book.entity.Book;
-import com.example.demo.book.service.BookAdminServiceImpl;
-import com.example.demo.book.service.BookInventoryService;
-import com.example.demo.book.service.BookServiceImpliments;
+import com.example.demo.book.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,9 +14,7 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class BookController {
 
-    private final BookServiceImpliments bookService; // Service (팀원과의 계약) 주입
-    private final BookInventoryService inventoryService;
-    private final BookAdminServiceImpl bookAdminService;
+    private final BookService bookService; // Service (팀원과의 계약) 주입
 
     // ==========================================
     // 1. 도서 목록 조회 (담당 영역: GET /api/books)
@@ -66,7 +62,7 @@ public class BookController {
     public StockResponse checkAvailability(@PathVariable("bookId") Long bookId,
                                            @RequestBody StockRequest request) {
         int count = request.getStockcount(); // 기본 1
-        int current = inventoryService.restock(bookId, count);
+        int current = bookService.restock(bookId, count);
         return new StockResponse(current);
     }
 
@@ -74,7 +70,7 @@ public class BookController {
     @PostMapping("/admin")
     public AdminBookResponse createBook(@RequestBody AdminBookRequest req) {
         Book book = buildBookFromRequest(req, true);
-        Book saved = bookAdminService.createBook(book, req.getDescription());
+        Book saved = bookService.createBook(book, req.getDescription());
         return new AdminBookResponse(saved.getId(), "등록완료");
     }
 
@@ -83,7 +79,7 @@ public class BookController {
     public AdminBookResponse updateBook(@PathVariable("bookId") Long bookId,
                                         @RequestBody AdminBookRequest req) {
         Book book = buildBookFromRequest(req, false);
-        Book updated = bookAdminService.updateBook(bookId, book, req.getDescription());
+        Book updated = bookService.updateBook(bookId, book, req.getDescription());
         return new AdminBookResponse(updated.getId(), "수정완료");
     }
 
@@ -93,7 +89,7 @@ public class BookController {
      */
     @DeleteMapping("/admin/{bookId}")
     public AdminBookResponse deleteBook(@PathVariable("bookId") Long bookId) {
-        bookAdminService.deleteBook(bookId);
+        bookService.deleteBook(bookId);
         return new AdminBookResponse(bookId, "삭제완료");
     }
 

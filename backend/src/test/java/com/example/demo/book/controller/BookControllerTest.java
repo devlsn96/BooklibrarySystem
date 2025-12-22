@@ -2,7 +2,7 @@ package com.example.demo.book.controller;
 
 import com.example.demo.book.dto.BookListResponse;
 import com.example.demo.book.dto.BookResponse;
-import com.example.demo.book.service.BookServiceImpliments;
+import com.example.demo.book.service.BookServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -32,7 +32,7 @@ class BookControllerTest {
 
         // Controller가 의존하는 BookService는 가짜(Mock) 객체로 대체
         @MockBean
-        private BookServiceImpliments bookService;
+        private BookServiceImpl bookService;
 
         // ==========================================
         // 1. 도서 상세 조회 테스트 (성공: GET /api/books/{id})
@@ -49,7 +49,7 @@ class BookControllerTest {
                                 .coverImageUrl("http://example.com/cover.jpg")
                                 .price(25000)
                                 .registerDate(java.time.LocalDate.now())
-                                .summary("객체지향이란 무엇인가...")
+                                .description("객체지향이란 무엇인가...")
                                 .build();
 
                 given(bookService.getBookById(bookId)).willReturn(mockResponse);
