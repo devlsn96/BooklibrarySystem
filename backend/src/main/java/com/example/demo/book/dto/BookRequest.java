@@ -1,8 +1,10 @@
 package com.example.demo.book.dto;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class BookRequest {
 
     private String title;

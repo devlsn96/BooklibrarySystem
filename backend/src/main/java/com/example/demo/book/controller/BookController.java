@@ -53,7 +53,7 @@ public class BookController {
     @PostMapping("/admin/{bookId}/stock")
     public StockResponse checkAvailability(@PathVariable("bookId") Long bookId,
                                            @RequestBody StockRequest request) {
-        int count = request.getStockcount(); // 기본 1
+        int count = request.getStockCount(); // 기본 1
         int current = bookService.restock(bookId, count);
         return new StockResponse(current);
     }

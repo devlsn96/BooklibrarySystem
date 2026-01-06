@@ -21,6 +21,7 @@ public class Book {
     private String author; // 지은이
     private String genre; // 장르
     private String tag; // 태그
+    @Lob
     private String coverImage; // 표지이미지
     private Integer price; // 가격
     private LocalDate registrationDate; // 등록일

@@ -1,5 +1,6 @@
 package com.example.demo.loan.entity;
 
+import com.example.demo.book.entity.BookManagement;
 import com.example.demo.user.entity.Member;
 import jakarta.persistence.*;
 import lombok.*;
@@ -18,7 +19,7 @@ public class Loan {
 
     @ManyToOne
     @JoinColumn(name = "book_management_id")
-    private com.example.demo.book.entity.BookManagement bookManagement;
+    private BookManagement bookManagement;
 
     @ManyToOne
     @JoinColumn(name = "member_id")
