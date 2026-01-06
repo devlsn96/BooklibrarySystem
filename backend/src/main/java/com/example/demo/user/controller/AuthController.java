@@ -9,13 +9,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
+@RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class AuthController {
 
     private final AuthService authService;
 
     // 회원가입
-    @PostMapping("/auth/signup")
+    @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody Map<String, String> body) {
         authService.signup(
                 body.get("memberId"),
@@ -47,7 +48,7 @@ public class AuthController {
     }
 
     // 회원 로그인
-    @PostMapping("/auth/login")
+    @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Map<String, String> body) {
         String token = authService.login(body.get("memberId"), body.get("password"));
         return ResponseEntity.ok(Map.of("accessToken", token, "role", "USER", "loginId", body.get("memberId")));

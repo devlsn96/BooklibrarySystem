@@ -10,6 +10,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class StockRequest {
-    /** 재고 증감 수량 (기본값 1) */
-    private int stockcount = 1;
+    // 재고 증감 수량 (기본값 1)
+    private int stockCount = 1;
 }

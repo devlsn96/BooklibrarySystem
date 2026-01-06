@@ -19,7 +19,6 @@ public class BookResponse {
     private String coverImageUrl;
     private Integer price;
     private LocalDate registerDate;
-
     private String description;
     private String genre;
     private String tag;

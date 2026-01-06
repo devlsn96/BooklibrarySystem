@@ -24,7 +24,6 @@ public class AuthService {
     private final MemberRepository memberRepository;
     private final EmployeeRepository employeeRepository;
     private final MemberManagementRepository memberManagementRepository;
-
     private final PasswordEncoder passwordEncoder;
 
     // JWT 비밀키 (서버 껐다 켜면 토큰 만료되게 임시로 자동생성)

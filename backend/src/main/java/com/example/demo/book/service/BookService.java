@@ -29,9 +29,7 @@ public class BookService implements BookServiceImpl, BookAdminServiceImpl {
         private final BookDetailRepository bookDetailRepository;
         private final BookManagementRepository bookManagementRepository;
 
-        // ======================================================
         // 1. 도서 목록 및 검색 조회 (Controller의 GET /api/books 지원)
-        // ======================================================
         @Transactional(readOnly = true)
         public BookListResponse getAllBooks(Integer page, String sort, String keyword) {
                 // 0-based index 처리
@@ -64,9 +62,7 @@ public class BookService implements BookServiceImpl, BookAdminServiceImpl {
                                 .build();
         }
 
-        // ======================================================
         // 2. 도서 상세 조회 (Controller의 GET /api/books/{bookId} 지원)
-        // ======================================================
         @Transactional(readOnly = true)
         public BookResponse getBookById(Long bookNo) {
                 Book book = bookRepository.findById(bookNo)
@@ -76,9 +72,7 @@ public class BookService implements BookServiceImpl, BookAdminServiceImpl {
                 return mapToResponse(book);
         }
 
-        // ======================================================
         // 4. 헬퍼 메서드: DTO 변환
-        // ======================================================
         private BookResponse mapToResponse(Book book) {
                 // 기본값: 상세 정보 포함 (기존 코드 호환성을 위해)
                 return mapToResponse(book, true);
@@ -181,12 +175,9 @@ public class BookService implements BookServiceImpl, BookAdminServiceImpl {
                 bookRepository.deleteById(bookId);
         }
 
-        /**
-         * 도서 대여가능 여부/재고 처리 (재고는 0 또는 1로만 관리)
-         *
-         * count <= 0 : 모든 재고를 대여불가(true)로 바꾸고 0 반환
-         * count > 0  : 최대 1개만 대여가능(false)로 두고, 나머지는 제거/대여불가로 처리 후 1 반환
-         */
+        // 도서 대여가능 여부/재고 처리 (재고는 0 또는 1로만 관리)
+        // count <= 0 : 모든 재고를 대여불가(true)로 바꾸고 0 반환
+        // count > 0  : 최대 1개만 대여가능(false)로 두고, 나머지는 제거/대여불가로 처리 후 1 반환
         public int restock(Long bookId, int count) {
                 Book book = bookRepository.findById(bookId)
                         .orElseThrow(() -> new IllegalArgumentException("Book not found: " + bookId));
