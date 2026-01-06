@@ -29,22 +29,13 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        // ====================================================
                         // 1. [누구나 접속 가능] - 인증/로그인, H2 콘솔, 에러 페이지
-                        // ====================================================
                         .requestMatchers("/h2-console/**", "/error").permitAll()
+
                         // 명세서: 회원가입, 회원 로그인, 관리자 로그인 -> 모두 Open
                         .requestMatchers(HttpMethod.POST, "/auth/signup", "/auth/login", "/admin/login").permitAll()
-
                         // 도서 목록/검색/상세 조회는 보통 비로그인 상태에서도 보여주므로 permitAll 처리
                         .requestMatchers(HttpMethod.GET, "/api/books/**").permitAll()
-
-
-                        // ====================================================
-                        // 2. [관리자 전용] - ROLE_ADMIN만 가능
-                        // ====================================================
-                        // 명세서: AI 이미지 생성
-                        .requestMatchers(HttpMethod.POST, "/api/images/generate").hasRole("ADMIN")
 
                         // 명세서: 도서 등록, 대여 가능 여부 확인 (/admin/books/...)
                         // 팁: /admin/** 로 시작하는 주소는 한방에 관리자 전용으로 묶음
@@ -58,9 +49,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PATCH, "/api/books/admin/update/**").hasRole("ADMIN")
 
 
-                        // ====================================================
                         // 3. [일반 멤버 전용] - ROLE_USER만 가능
-                        // ====================================================
                         // 명세서: 대여 하기 (POST /api/loans)
                         .requestMatchers(HttpMethod.POST, "/api/loans").hasRole("USER")
 
@@ -71,9 +60,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PATCH, "/api/loans/**/return").hasRole("USER")
 
 
-                        // ====================================================
                         // 4. [나머지] - 설정 안 된 모든 요청은 로그인 필요
-                        // ====================================================
                         .anyRequest().authenticated()
                 )
 
